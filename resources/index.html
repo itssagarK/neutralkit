@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NeutralKit — GSoC 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #f5f6fa;
+  --bg2:       #eef0f7;
+  --surface:   #ffffff;
+  --surface2:  #fafbff;
+  --border:    #e2e5f0;
+  --border2:   #d0d4e8;
+  --green:     #0a8c4e;
+  --green-lo:  rgba(10,140,78,0.07);
+  --green-mid: rgba(10,140,78,0.2);
+  --green-hi:  rgba(10,140,78,0.9);
+  --red:       #d63a5a;
+  --red-lo:    rgba(214,58,90,0.07);
+  --red-mid:   rgba(214,58,90,0.18);
+  --blue:      #2563eb;
+  --blue-lo:   rgba(37,99,235,0.07);
+  --blue-mid:  rgba(37,99,235,0.18);
+  --amber:     #c47a0a;
+  --amber-lo:  rgba(196,122,10,0.08);
+  --amber-mid: rgba(196,122,10,0.2);
+  --purple:    #7c3aed;
+  --purple-lo: rgba(124,58,237,0.07);
+  --purple-mid:rgba(124,58,237,0.2);
+  --text:      #1a1d2e;
+  --text2:     #5a5f7a;
+  --text3:     #9499b8;
+  --neu-orange:#f5a623;
+  --mono: 'DM Mono', monospace;
+  --sans: 'DM Sans', sans-serif;
+  --r: 10px;
+  --tr: 0.18s ease;
+  --shadow: 0 1px 4px rgba(26,29,46,0.07), 0 4px 16px rgba(26,29,46,0.05);
+  --shadow-hover: 0 4px 12px rgba(26,29,46,0.12), 0 12px 32px rgba(26,29,46,0.08);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.5;min-height:100vh}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+.header{position:sticky;top:0;z-index:100;height:58px;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:0 1px 8px rgba(26,29,46,0.06);display:flex;align-items:center;justify-content:space-between;padding:0 28px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-img{width:32px;height:32px;background:var(--neu-orange);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-img svg{width:22px;height:22px}
+.logo-text{font-size:1.05rem;font-weight:700;color:var(--text);letter-spacing:-0.3px}
+.logo-text span{color:var(--neu-orange)}
+.logo-sep{width:1px;height:18px;background:var(--border2);margin:0 4px}
+.logo-sub{font-size:0.68rem;color:var(--text3);font-weight:400}
+.header-right{display:flex;align-items:center;gap:8px}
+.pill{font-size:0.62rem;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:0.3px;white-space:nowrap}
+.pill-g{background:var(--green-lo);color:var(--green);border:1px solid var(--green-mid)}
+.pill-b{background:var(--blue-lo);color:var(--blue);border:1px solid var(--blue-mid)}
+.btn{background:var(--bg2);border:1px solid var(--border2);color:var(--text2);font-family:var(--sans);font-size:0.68rem;font-weight:500;padding:5px 12px;border-radius:var(--r);cursor:pointer;display:flex;align-items:center;gap:5px;transition:all var(--tr)}
+.btn:hover{border-color:var(--green);color:var(--green);background:var(--green-lo)}
+.tabs-bar{position:sticky;top:58px;z-index:90;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;gap:2px;overflow-x:auto}
+.tab{display:flex;align-items:center;gap:7px;padding:13px 18px;font-size:0.73rem;font-weight:500;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all var(--tr);white-space:nowrap;user-select:none}
+.tab:hover{color:var(--text2)}
+.tab.active{color:var(--text);border-bottom-color:var(--neu-orange)}
+.tab-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.tab-count{font-size:0.58rem;padding:1px 6px;border-radius:10px;background:var(--bg2);border:1px solid var(--border);color:var(--text3);font-family:var(--mono)}
+.tab.active .tab-count{background:rgba(245,166,35,0.12);border-color:rgba(245,166,35,0.3);color:var(--amber)}
+.panel{display:none}
+.panel.active{display:block}
+.pg-intro{padding:24px 28px 0;max-width:720px}
+.pg-intro h2{font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:5px}
+.pg-intro p{font-size:0.77rem;color:var(--text2);line-height:1.75}
+.sec-head{padding:20px 28px 0;font-size:0.6rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:1.8px;display:flex;align-items:center;gap:12px}
+.sec-head::after{content:'';flex:1;height:1px;background:var(--border)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;padding:16px 28px 28px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:16px 28px 32px}
+@media(max-width:1000px){.grid-3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.grid,.grid-3{grid-template-columns:1fr;padding:12px 16px 20px}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;box-shadow:var(--shadow);transition:transform var(--tr),box-shadow var(--tr),border-color var(--tr);animation:fadeUp 0.25s ease both}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover)}
+.card.cg:hover{border-color:var(--green-mid)}
+.card.cb:hover{border-color:var(--blue-mid)}
+.card.cr{border-style:dashed;border-color:rgba(214,58,90,0.25);background:rgba(214,58,90,0.012)}
+.card.cr:hover{border-color:var(--red-mid)!important}
+.card.ca{border-color:rgba(196,122,10,0.28);background:rgba(196,122,10,0.012)}
+.card.ca:hover{border-color:var(--amber-mid)!important}
+.card.cf{border-style:dashed;border-color:rgba(124,58,237,0.28);background:rgba(124,58,237,0.015)}
+.card.cf:hover{border-color:var(--purple-mid)!important}
+.card:nth-child(1){animation-delay:.03s}.card:nth-child(2){animation-delay:.07s}.card:nth-child(3){animation-delay:.11s}.card:nth-child(4){animation-delay:.15s}.card:nth-child(5){animation-delay:.19s}.card:nth-child(6){animation-delay:.23s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.c-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:8px}
+.c-title-g{display:flex;align-items:center;gap:10px}
+.c-icon{font-size:1.1rem;line-height:1;flex-shrink:0}
+.c-cat{font-size:0.58rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px}
+.c-title{font-size:0.88rem;font-weight:600;color:var(--text);margin-top:1px}
+.api-line{font-family:var(--mono);font-size:0.67rem;font-weight:500;padding:6px 10px;border-radius:6px;margin-bottom:12px;display:block}
+.api-g{background:var(--green-lo);color:var(--green);border:1px solid var(--green-mid)}
+.api-b{background:var(--blue-lo);color:var(--blue);border:1px solid var(--blue-mid)}
+.api-r{background:var(--red-lo);color:var(--red);border:1px solid var(--red-mid)}
+.api-a{background:var(--amber-lo);color:var(--amber);border:1px solid var(--amber-mid)}
+.api-p{background:var(--purple-lo);color:var(--purple);border:1px solid var(--purple-mid)}
+.c-body{font-size:0.75rem;color:var(--text2);line-height:1.8}
+.kv{display:flex;gap:10px;align-items:baseline;margin-bottom:3px}
+.kk{color:var(--text3);font-family:var(--mono);font-size:0.62rem;flex-shrink:0;min-width:72px}
+.vv{color:var(--text);font-family:var(--mono);font-size:0.69rem;word-break:break-all}
+.c-foot{margin-top:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:0.59rem;font-weight:600;padding:3px 9px;border-radius:20px;letter-spacing:0.3px;text-transform:uppercase}
+.bg{background:var(--green-lo);color:var(--green);border:1px solid var(--green-mid)}
+.bb{background:var(--blue-lo);color:var(--blue);border:1px solid var(--blue-mid)}
+.br{background:var(--red-lo);color:var(--red);border:1px solid var(--red-mid)}
+.ba{background:var(--amber-lo);color:var(--amber);border:1px solid var(--amber-mid)}
+.bp{background:var(--purple-lo);color:var(--purple);border:1px solid var(--purple-mid)}
+.pr-tag{font-family:var(--mono);font-size:0.6rem;font-weight:500;color:var(--blue);background:var(--blue-lo);border:1px solid var(--blue-mid);padding:3px 8px;border-radius:20px;cursor:pointer;transition:all var(--tr);text-decoration:none;display:inline-block;white-space:nowrap}
+.pr-tag:hover{background:var(--blue-mid)}
+.loading{color:var(--text3);font-family:var(--mono);font-size:0.67rem;animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:0.3}50%{opacity:0.8}}
+.prog-wrap{height:6px;background:var(--bg2);border-radius:3px;margin:10px 0 4px;overflow:hidden;border:1px solid var(--border)}
+.prog-bar{height:100%;border-radius:3px;transition:width 1.1s cubic-bezier(.16,1,.3,1);width:0}
+.pg{background:linear-gradient(90deg,var(--green),#22c55e)}
+.pa{background:linear-gradient(90deg,var(--amber),#f59e0b)}
+.pr2{background:linear-gradient(90deg,var(--red),#ef4444)}
+.prog-label{display:flex;justify-content:space-between;font-size:0.61rem;color:var(--text3);font-family:var(--mono)}
+.brow{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.bname{width:90px;font-size:0.63rem;color:var(--text2);flex-shrink:0;font-weight:500}
+.bwrap{flex:1;background:var(--bg2);border-radius:4px;height:18px;overflow:hidden;border:1px solid var(--border)}
+.bbar{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-family:var(--mono);font-size:0.58rem;font-weight:600;white-space:nowrap;width:0;transition:width 1.3s cubic-bezier(.16,1,.3,1)}
+.bnote{width:110px;font-size:0.59rem;color:var(--text3);flex-shrink:0}
+.be{background:linear-gradient(90deg,#fecaca,#fca5a5);color:#991b1b}
+.bn{background:linear-gradient(90deg,#fed7aa,#fdba74);color:#92400e}
+.bt{background:linear-gradient(90deg,#bbf7d0,#86efac);color:#166534}
+.bnl{background:linear-gradient(90deg,var(--green),#22c55e);color:#fff}
+.mock-block{font-family:var(--mono);font-size:0.64rem;color:var(--text3);line-height:1.9;margin:10px 0;padding:10px 12px;background:var(--red-lo);border-radius:6px;border-left:2px solid var(--red-mid)}
+.mock-lbl{font-size:0.56rem;text-transform:uppercase;letter-spacing:1px;color:var(--red);margin-bottom:5px;font-family:var(--sans);font-weight:600}
+.future-block{font-family:var(--mono);font-size:0.64rem;color:var(--text3);line-height:1.9;margin:10px 0;padding:10px 12px;background:var(--purple-lo);border-radius:6px;border-left:2px solid var(--purple-mid)}
+.future-lbl{font-size:0.56rem;text-transform:uppercase;letter-spacing:1px;color:var(--purple);margin-bottom:5px;font-family:var(--sans);font-weight:600}
+.why-block{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:10px 12px;margin:10px 0;font-size:0.71rem;color:var(--text2);line-height:1.7}
+.why-lbl{font-size:0.56rem;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:4px;font-weight:600}
+.why-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+.wtag{font-size:0.59rem;padding:2px 7px;background:var(--surface);border:1px solid var(--border2);border-radius:20px;color:var(--text3)}
+.comp-row{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
+.comp{font-size:0.6rem;font-weight:600;padding:2px 7px;border-radius:20px}
+.cy{background:var(--green-lo);color:var(--green);border:1px solid var(--green-mid)}
+.cn{background:var(--red-lo);color:var(--red);border:1px solid var(--red-mid)}
+.novel-mock{font-family:var(--mono);font-size:0.63rem;color:var(--text2);line-height:1.9;margin:10px 0;padding:10px 12px;background:var(--amber-lo);border-radius:6px;border-left:2px solid var(--amber-mid)}
+.arch-wrap{padding:24px 28px 36px}
+.arch-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:1100px}
+@media(max-width:800px){.arch-grid{grid-template-columns:1fr}}
+.arch-diag{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px;box-shadow:var(--shadow)}
+.arch-ttl{font-size:0.7rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;text-align:center;margin-bottom:24px}
+.arch-layer{display:flex;align-items:center;justify-content:center;gap:12px}
+.arch-box{border-radius:8px;padding:13px 20px;text-align:center;min-width:200px;border:1px solid}
+.arch-box-cat{font-size:0.58rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;font-weight:600}
+.arch-box-main{font-size:0.88rem;font-weight:600;color:var(--text)}
+.arch-box-sub{font-size:0.63rem;margin-top:3px;font-family:var(--mono);color:var(--text3)}
+.ab-js{background:var(--green-lo);border-color:var(--green-mid)}
+.ab-js .arch-box-cat{color:var(--green)}
+.ab-cpp{background:var(--blue-lo);border-color:var(--blue-mid)}
+.ab-cpp .arch-box-cat{color:var(--blue)}
+.ab-os{background:var(--bg2);border-color:var(--border2);min-width:140px}
+.ab-os .arch-box-cat{color:var(--text3)}
+.arch-arr{display:flex;flex-direction:column;align-items:center;margin:4px 0;gap:2px}
+.arch-arr-line{width:1px;height:16px;background:var(--border2)}
+.arch-arr-lbl{font-size:0.58rem;color:var(--text3);font-family:var(--mono)}
+.arch-arr-head{font-size:0.7rem;color:var(--text3)}
+.arch-os-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.flow-steps{margin-top:20px}
+.flow-step{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.flow-step:last-child{border-bottom:none}
+.flow-num{width:22px;height:22px;border-radius:50%;flex-shrink:0;background:var(--bg2);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:0.62rem;font-weight:600;color:var(--text3);font-family:var(--mono)}
+.flow-content{flex:1}
+.flow-title{font-size:0.73rem;font-weight:600;color:var(--text);margin-bottom:2px}
+.flow-desc{font-size:0.67rem;color:var(--text2);line-height:1.6}
+.flow-code{font-family:var(--mono);font-size:0.62rem;color:var(--blue);margin-top:3px}
+.arch-principles{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;box-shadow:var(--shadow)}
+.principles-title{font-size:0.7rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:18px}
+.principle{display:flex;gap:12px;padding:12px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:10px}
+.principle:last-child{margin-bottom:0}
+.principle-icon{font-size:1.1rem;flex-shrink:0;line-height:1}
+.principle-title{font-size:0.75rem;font-weight:600;color:var(--text);margin-bottom:3px}
+.principle-desc{font-size:0.68rem;color:var(--text2);line-height:1.6}
+.principle-code{font-family:var(--mono);font-size:0.62rem;color:var(--blue);background:var(--blue-lo);padding:4px 8px;border-radius:4px;margin-top:6px;display:inline-block}
+.pr-overview{display:flex;gap:10px;padding:14px 28px;background:var(--bg2);border-bottom:1px solid var(--border);overflow-x:auto;flex-wrap:wrap}
+.pr-stat{display:flex;flex-direction:column;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 16px;min-width:80px;box-shadow:var(--shadow);flex-shrink:0}
+.pr-stat-num{font-size:1.3rem;font-weight:700;color:var(--text);font-family:var(--mono);line-height:1}
+.pr-stat-lbl{font-size:0.58rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-top:3px;text-align:center}
+.pr-stat.s-green .pr-stat-num{color:var(--green)}
+.pr-stat.s-blue .pr-stat-num{color:var(--blue)}
+.pr-stat.s-amber .pr-stat-num{color:var(--amber)}
+.pr-stat.s-red .pr-stat-num{color:var(--red)}
+.pr-stat.s-purple .pr-stat-num{color:var(--purple)}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--border);padding:12px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:0.62rem;color:var(--text3);background:var(--surface)}
+.foot-left{display:flex;align-items:center;gap:10px}
+.foot-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 5px rgba(10,140,78,0.4)}
+.foot-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.foot-prs{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.foot-gh{display:inline-flex;align-items:center;gap:6px;font-size:0.65rem;font-weight:600;color:var(--text);text-decoration:none;background:var(--bg2);border:1px solid var(--border2);padding:4px 11px;border-radius:20px;transition:all var(--tr)}
+.foot-gh:hover{border-color:var(--text2);background:var(--border)}
+.foot-gh svg{width:13px;height:13px;flex-shrink:0}
+.btn-add-pr{display:inline-flex;align-items:center;gap:5px;font-size:0.65rem;font-weight:600;color:var(--blue);background:var(--blue-lo);border:1px solid var(--blue-mid);padding:4px 11px;border-radius:20px;cursor:pointer;transition:all var(--tr);font-family:var(--sans)}
+.btn-add-pr:hover{background:var(--blue-mid)}
+
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(26,29,46,0.45);backdrop-filter:blur(3px);z-index:200;align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;width:400px;max-width:calc(100vw - 32px);box-shadow:0 20px 60px rgba(26,29,46,0.2);animation:mIn 0.18s ease}
+@keyframes mIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+.modal h3{font-size:0.95rem;font-weight:600;margin-bottom:3px}
+.modal-sub{font-size:0.7rem;color:var(--text3);margin-bottom:18px}
+.mf{margin-bottom:13px}
+.mf label{display:block;font-size:0.62rem;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.mf input,.mf select{width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:7px;padding:8px 11px;font-family:var(--sans);font-size:0.8rem;color:var(--text);outline:none;transition:border-color var(--tr)}
+.mf input:focus,.mf select:focus{border-color:var(--blue)}
+.modal-btns{display:flex;gap:8px;margin-top:18px}
+.mbtn-cancel{flex:1;background:var(--bg2);border:1px solid var(--border2);color:var(--text2);font-family:var(--sans);font-size:0.78rem;font-weight:500;padding:8px;border-radius:7px;cursor:pointer;transition:all var(--tr)}
+.mbtn-cancel:hover{background:var(--border)}
+.mbtn-add{flex:1;background:var(--blue);border:1px solid var(--blue);color:#fff;font-family:var(--sans);font-size:0.78rem;font-weight:600;padding:8px;border-radius:7px;cursor:pointer;transition:all var(--tr)}
+.mbtn-add:hover{background:#1d4ed8}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">
+    <div class="logo-img">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="2.2" fill="white"/>
+        <ellipse cx="12" cy="12" rx="9" ry="3.5" stroke="white" stroke-width="1.4" fill="none"/>
+        <ellipse cx="12" cy="12" rx="9" ry="3.5" stroke="white" stroke-width="1.4" fill="none" transform="rotate(60 12 12)"/>
+        <ellipse cx="12" cy="12" rx="9" ry="3.5" stroke="white" stroke-width="1.4" fill="none" transform="rotate(120 12 12)"/>
+      </svg>
+    </div>
+    <div class="logo-text">Neutral<span>Kit</span></div>
+    <div class="logo-sep"></div>
+    <div class="logo-sub">Neutralinojs · GSoC 2026 · Project 3</div>
+  </div>
+  <div class="header-right">
+    <span class="pill pill-g">GSoC 2026</span>
+    <span class="pill pill-b">Project 3 · Native API</span>
+    <button class="btn" onclick="loadAll()">↻ Refresh</button>
+  </div>
+</header>
+
+<nav class="tabs-bar">
+  <div class="tab active" onclick="switchTab('apis',this)">
+    <div class="tab-dot" style="background:var(--green)"></div>
+    Stable APIs <span class="tab-count">5</span>
+  </div>
+  <div class="tab" onclick="switchTab('prs',this)">
+    <div class="tab-dot" style="background:var(--blue)"></div>
+    My Contributions <span class="tab-count" id="tc-prs">9 PRs</span>
+  </div>
+  <div class="tab" onclick="switchTab('gsoc',this)">
+    <div class="tab-dot" style="background:var(--red)"></div>
+    GSoC Goals <span class="tab-count">6 APIs</span>
+  </div>
+  <div class="tab" onclick="switchTab('arch',this)">
+    <div class="tab-dot" style="background:var(--text3)"></div>
+    Architecture
+  </div>
+</nav>
+
+<!-- TAB 1: STABLE APIS -->
+<div class="panel active" id="panel-apis">
+  <div class="pg-intro">
+    <h2>Stable Neutralinojs APIs — Live Data</h2>
+    <p>Real data fetched from the running binary. These APIs ship in every official Neutralinojs release and demonstrate the framework's existing system inspection capabilities.</p>
+  </div>
+  <div class="grid">
+    <div class="card cg">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">🖥</div><div><div class="c-cat">Hardware</div><div class="c-title">CPU Information</div></div></div></div>
+      <span class="api-line api-g">computer.getCPUInfo()</span>
+      <div class="c-body" id="cpu-info"><span class="loading">fetching...</span></div>
+      <div class="c-foot"><span class="badge bg">✓ Stable API</span></div>
+    </div>
+    <div class="card cg">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">🧠</div><div><div class="c-cat">Memory</div><div class="c-title">RAM Usage</div></div></div></div>
+      <span class="api-line api-g">computer.getMemoryInfo()</span>
+      <div class="c-body" id="mem-info"><span class="loading">fetching...</span></div>
+      <div class="prog-wrap"><div class="prog-bar pg" id="mem-bar"></div></div>
+      <div class="prog-label"><span id="mem-l">—</span><span id="mem-r">—</span></div>
+      <div class="c-foot"><span class="badge bg">✓ Stable API</span></div>
+    </div>
+    <div class="card cg">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">🖥</div><div><div class="c-cat">Display</div><div class="c-title">Screen Resolution</div></div></div></div>
+      <span class="api-line api-g">computer.getDisplays()</span>
+      <div class="c-body" id="display-info"><span class="loading">fetching...</span></div>
+      <div class="c-foot"><span class="badge bg">✓ Stable API</span></div>
+    </div>
+    <div class="card cg">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">⚙️</div><div><div class="c-cat">Environment</div><div class="c-title">Env Variables</div></div></div></div>
+      <span class="api-line api-g">os.getEnv("USERNAME")</span>
+      <div class="c-body" id="env-info"><span class="loading">fetching...</span></div>
+      <div class="c-foot"><span class="badge bg">✓ Stable API</span></div>
+    </div>
+    <div class="card cg">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">📁</div><div><div class="c-cat">Filesystem</div><div class="c-title">System Paths</div></div></div></div>
+      <span class="api-line api-g">os.getPath("documents")</span>
+      <div class="c-body" id="paths-info"><span class="loading">fetching...</span></div>
+      <div class="c-foot"><span class="badge bg">✓ Stable API</span></div>
+    </div>
+    <div class="card cg">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">📦</div><div><div class="c-cat">Bundle Size</div><div class="c-title">Why Neutralinojs Wins</div></div></div></div>
+      <span class="api-line api-g">// Zero Chromium bundled</span>
+      <div style="margin-top:8px">
+        <div class="brow"><div class="bname">Electron</div><div class="bwrap"><div class="bbar be" id="bar-e">150 MB</div></div><div class="bnote">Ships Chromium</div></div>
+        <div class="brow"><div class="bname">NW.js</div><div class="bwrap"><div class="bbar bn" id="bar-n">100 MB</div></div><div class="bnote">Ships Chromium</div></div>
+        <div class="brow"><div class="bname">Tauri</div><div class="bwrap"><div class="bbar bt" id="bar-t">3 MB</div></div><div class="bnote">System WebView</div></div>
+        <div class="brow"><div class="bname" style="color:var(--green);font-weight:600">Neutralinojs</div><div class="bwrap"><div class="bbar bnl" id="bar-nl">~1 MB</div></div><div class="bnote" style="color:var(--green)">System WebView ✓</div></div>
+      </div>
+      <div class="c-foot"><span class="badge bg">✓ No Chromium · No Node.js</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 2: MY CONTRIBUTIONS -->
+<div class="panel" id="panel-prs">
+  <div class="pr-overview">
+    <div class="pr-stat s-blue"><div class="pr-stat-num" id="stat-total">9</div><div class="pr-stat-lbl">Total PRs</div></div>
+    <div class="pr-stat s-green"><div class="pr-stat-num">2</div><div class="pr-stat-lbl">New APIs</div></div>
+    <div class="pr-stat s-green"><div class="pr-stat-num">3</div><div class="pr-stat-lbl">Bug Fixes</div></div>
+    <div class="pr-stat s-blue"><div class="pr-stat-num">2</div><div class="pr-stat-lbl">Test Cases</div></div>
+    <div class="pr-stat s-amber"><div class="pr-stat-num">1</div><div class="pr-stat-lbl">Security Find</div></div>
+    <div class="pr-stat s-green"><div class="pr-stat-num">3</div><div class="pr-stat-lbl">Docs PRs</div></div>
+    <div class="pr-stat s-purple"><div class="pr-stat-num">3+</div><div class="pr-stat-lbl">Planned</div></div>
+  </div>
+  <div class="pg-intro" style="padding-top:18px">
+    <h2>My 9 Contributions to Neutralinojs</h2>
+    <p>New APIs, bug fixes, CI improvements, security research, and documentation. Cards marked with a PR tag link directly to GitHub. Fork binary cards show live data if you are running the compiled fork.</p>
+  </div>
+
+  <div class="sec-head">New APIs — requires fork binary</div>
+  <div class="grid">
+    <div class="card cb">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">👤</div><div><div class="c-cat">New API</div><div class="c-title">User Account Info</div></div></div><a class="pr-tag" href="https://github.com/neutralinojs/neutralinojs/pull/1632" target="_blank">PR #1632</a></div>
+      <span class="api-line api-b">os.getUserInfo()</span>
+      <div class="c-body" id="user-info"><span class="loading">calling your API...</span></div>
+      <div class="c-foot"><span class="badge bb">🛠 Your Implementation</span></div>
+    </div>
+    <div class="card cb">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">🗂</div><div><div class="c-cat">New API</div><div class="c-title">Desktop Path Support</div></div></div><a class="pr-tag" href="https://github.com/neutralinojs/neutralinojs/pull/1616" target="_blank">PR #1616</a></div>
+      <span class="api-line api-b">os.getPath("desktop")</span>
+      <div class="c-body" id="desktop-path"><span class="loading">calling your API...</span></div>
+      <div class="c-foot"><span class="badge bb">🛠 Your Implementation</span></div>
+    </div>
+    <div class="card cb">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">📂</div><div><div class="c-cat">New Test Cases</div><div class="c-title">7 New Path Types</div></div></div><a class="pr-tag" href="https://github.com/neutralinojs/neutralinojs/pull/1608" target="_blank">PR #1608</a></div>
+      <span class="api-line api-b">os.getPath("config"|"cache"|"pictures"...)</span>
+      <div class="c-body" id="all-paths"><span class="loading">fetching 7 types...</span></div>
+      <div class="c-foot"><span class="badge bb">🛠 7 Test Cases Added</span></div>
+    </div>
+  </div>
+
+  <div class="sec-head">Bug Fixes &amp; CI</div>
+  <div class="grid">
+    <div class="card cb">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">🔧</div><div><div class="c-cat">Memory Leak Fix</div><div class="c-title">Win32 Handle Leaks</div></div></div><a class="pr-tag" href="https://github.com/neutralinojs/neutralinojs/pull/1630" target="_blank">PR #1630</a></div>
+      <span class="api-line api-b">os.setTray() — 3 leaks fixed</span>
+      <div class="c-body">
+        <div class="kv"><span class="kk">Fix 1</span><span class="vv">HICON → DestroyIcon()</span></div>
+        <div class="kv"><span class="kk">Fix 2</span><span class="vv">HMENU → DestroyMenu()</span></div>
+        <div class="kv"><span class="kk">Fix 3</span><span class="vv">LPWSTR items → delete[]</span></div>
+        <div class="kv"><span class="kk">Issue</span><span class="vv" style="color:var(--green)">#671 open since 2021 ✓</span></div>
+      </div>
+      <div class="c-foot"><span class="badge bb">🛠 Native Handle Safety</span></div>
+    </div>
+    <div class="card cb">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">⚡</div><div><div class="c-cat">CI Fix</div><div class="c-title">Platform-Aware Timeouts</div></div></div><a class="pr-tag" href="https://github.com/neutralinojs/neutralinojs/pull/1629" target="_blank">PR #1629</a></div>
+      <span class="api-line api-b">// runner.js · index.js · os.spec.js</span>
+      <div class="c-body">
+        <div class="kv"><span class="kk">Before</span><span class="vv" style="color:var(--red)">20000ms hardcoded</span></div>
+        <div class="kv"><span class="kk">After</span><span class="vv" style="color:var(--green)">win32 ? 40000 : 20000</span></div>
+        <div class="kv"><span class="kk">OS tests</span><span class="vv" style="color:var(--green)">44 → 45 passing ✓</span></div>
+        <div class="kv"><span class="kk">App tests</span><span class="vv" style="color:var(--green)">13 → 14 passing ✓</span></div>
+      </div>
+      <div class="c-foot"><span class="badge bb">🛠 Windows CI Unblocked</span></div>
+    </div>
+    <div class="card cb">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">🔩</div><div><div class="c-cat">Bug Fix</div><div class="c-title">showOpenDialog Path Fix</div></div></div><a class="pr-tag" href="https://github.com/neutralinojs/neutralinojs/pull/1615" target="_blank">PR #1615</a></div>
+      <span class="api-line api-b">os.showOpenDialog() — unNormalizePath</span>
+      <div class="c-body">
+        <div class="kv"><span class="kk">Problem</span><span class="vv">Missing helpers::unNormalizePath call</span></div>
+        <div class="kv"><span class="kk">Impact</span><span class="vv">Wrong path separators on Windows</span></div>
+        <div class="kv"><span class="kk">Fix</span><span class="vv">1-line C++ correction in os.cpp</span></div>
+      </div>
+      <div class="c-foot"><span class="badge bb">🛠 Path Normalization</span></div>
+    </div>
+  </div>
+
+  <div class="sec-head">Security &amp; Documentation</div>
+  <div class="grid">
+    <div class="card ca">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">🔍</div><div><div class="c-cat">Security · March 2026</div><div class="c-title">Supply Chain Attack Detected</div></div></div><span style="font-size:0.59rem;color:var(--green);background:var(--green-lo);border:1px solid var(--green-mid);padding:3px 8px;border-radius:20px;font-weight:600">Reported ✓</span></div>
+      <span class="api-line api-a">PR #1580 — malicious payload caught</span>
+      <div class="c-body">
+        <div class="kv"><span class="kk">Attack</span><span class="vv">String.fromCharCode obfuscation</span></div>
+        <div class="kv"><span class="kk">Hidden via</span><span class="vv">.gitignore + config.bat</span></div>
+        <div class="kv"><span class="kk">File</span><span class="vv">spec/runner.js line 117</span></div>
+        <div class="kv"><span class="kk">Result</span><span class="vv" style="color:var(--green)">Blocked before merge ✓</span></div>
+      </div>
+      <div class="c-foot"><span class="badge ba">⚑ Security Research</span></div>
+    </div>
+    <div class="card cb">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">📝</div><div><div class="c-cat">Documentation</div><div class="c-title">3 Doc PRs · neutralinojs.github.io</div></div></div></div>
+      <span class="api-line api-b">PRs #425 · #426 · #427</span>
+      <div class="c-body">
+        <div class="kv"><span class="kk">#425</span><span class="vv">os.md — param names, types, typos</span></div>
+        <div class="kv"><span class="kk">#426</span><span class="vv">storage.md — extra ); in examples</span></div>
+        <div class="kv"><span class="kk">#427</span><span class="vv">window.md — return type, missing colon</span></div>
+      </div>
+      <div class="c-foot"><span class="badge bb">🛠 Docs Accuracy</span></div>
+    </div>
+  </div>
+
+  <!-- ── FUTURE CONTRIBUTIONS (NEW) ── -->
+  <div class="sec-head" style="color:var(--purple)">Future Contributions — Planned Post-GSoC</div>
+  <div class="grid">
+    <div class="card cf">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">🔒</div><div><div class="c-cat">Planned Fix</div><div class="c-title">Unguarded stoi() Calls</div></div></div><span style="font-size:0.59rem;color:var(--purple);background:var(--purple-lo);border:1px solid var(--purple-mid);padding:3px 8px;border-radius:20px;font-weight:600">Issue #1583</span></div>
+      <span class="api-line api-p">// server/neuserver.cpp · api handlers</span>
+      <div class="future-block"><div class="future-lbl">Problem</div>stoi() throws std::invalid_argument on malformed input — no try/catch anywhere. Can crash the framework process.</div>
+      <div class="why-block"><div class="why-lbl">Fix Plan</div>Wrap all stoi() calls in try/catch. Return structured JSON error instead of crashing. Affects multiple API handlers across the codebase.<div class="why-tags"><span class="wtag">crash safety</span><span class="wtag">error handling</span><span class="wtag">C++ fix</span></div></div>
+      <div class="c-foot"><span class="badge bp">🔮 Planned Post-GSoC</span></div>
+    </div>
+    <div class="card cf">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">👁</div><div><div class="c-cat">Planned Fix</div><div class="c-title">Invalid Watch ID on Failed addWatch</div></div></div><span style="font-size:0.59rem;color:var(--purple);background:var(--purple-lo);border:1px solid var(--purple-mid);padding:3px 8px;border-radius:20px;font-weight:600">Issue #1600</span></div>
+      <span class="api-line api-p">filesystem.createWatcher(path)</span>
+      <div class="future-block"><div class="future-lbl">Problem</div>Returns a watch ID even when the OS watcher fails to attach. Callers receive a phantom ID they cannot use.</div>
+      <div class="why-block"><div class="why-lbl">Fix Plan</div>Check OS watcher return value before assigning an ID. Return proper error response on failure. Add a test case covering the failure path.<div class="why-tags"><span class="wtag">filesystem API</span><span class="wtag">error semantics</span><span class="wtag">test coverage</span></div></div>
+      <div class="c-foot"><span class="badge bp">🔮 Planned Post-GSoC</span></div>
+    </div>
+    <div class="card cf">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">🧪</div><div><div class="c-cat">Planned Fix</div><div class="c-title">Re-enable Skipped Windows Tests</div></div></div><span style="font-size:0.59rem;color:var(--purple);background:var(--purple-lo);border:1px solid var(--purple-mid);padding:3px 8px;border-radius:20px;font-weight:600">Issue #1566</span></div>
+      <span class="api-line api-p">window.setSize() — spec/window.spec.js</span>
+      <div class="future-block"><div class="future-lbl">Problem</div>Several window.setSize() tests are skipped on Windows with .skip(). Root cause not yet investigated.</div>
+      <div class="why-block"><div class="why-lbl">Fix Plan</div>Diagnose why setSize() behaves differently on Windows. Fix the underlying timing or API issue and re-enable the skipped tests with platform-specific assertions.<div class="why-tags"><span class="wtag">window API</span><span class="wtag">CI coverage</span><span class="wtag">Windows fix</span></div></div>
+      <div class="c-foot"><span class="badge bp">🔮 Planned Post-GSoC</span></div>
+    </div>
+  </div>
+
+  <!-- Dynamic PRs added via modal -->
+  <div id="extra-prs-root"></div>
+</div>
+
+<!-- TAB 3: GSOC GOALS -->
+<div class="panel" id="panel-gsoc">
+  <div class="pg-intro">
+    <h2>APIs Missing from Neutralinojs · GSoC 2026 Goals</h2>
+    <p>Features every competitor already ships. Each card shows mock data, the real-world use case, and which frameworks have it. All implementations use OS-native APIs only — zero new dependencies, zero bundle size increase.</p>
+  </div>
+  <div class="grid-3">
+    <div class="card cr">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">🌐</div><div><div class="c-cat">Network</div><div class="c-title">Network Interfaces</div></div></div></div>
+      <span class="api-line api-r">os.getNetworkInterfaces()</span>
+      <div class="mock-block"><div class="mock-lbl">What you'd see</div>eth0 · 192.168.1.5 · AA:BB:CC:DD:EE:FF<br>wlan0 · 192.168.1.8 · WiFi adapter<br>lo · 127.0.0.1 · loopback</div>
+      <div class="why-block"><div class="why-lbl">Why this API?</div>Neutralinojs cannot inspect network adapters. Needed for system monitors, debugging tools, and network dashboards.<div class="why-tags"><span class="wtag">system monitors</span><span class="wtag">network tools</span><span class="wtag">debug apps</span></div></div>
+      <div class="comp-row"><span class="comp cy">Electron ✓</span><span class="comp cy">Tauri ✓</span><span class="comp cy">Node.js ✓</span><span class="comp cn">Neutralinojs ✗</span></div>
+      <div class="c-foot"><span class="badge br">❌ Missing · GSoC Target</span><code style="font-size:0.59rem;color:var(--text3)">getifaddrs() / iphlpapi</code></div>
+    </div>
+    <div class="card cr">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">💻</div><div><div class="c-cat">System</div><div class="c-title">Hostname</div></div></div></div>
+      <span class="api-line api-r">os.getHostname()</span>
+      <div class="mock-block"><div class="mock-lbl">What you'd see</div>SAGAR-LAPTOP</div>
+      <div class="why-block"><div class="why-lbl">Why this API?</div>One-liner: gethostname() on POSIX, GetComputerName() on Win32. ~5 lines C++. Essential for device identity and local networking apps.<div class="why-tags"><span class="wtag">device identity</span><span class="wtag">local networking</span></div></div>
+      <div class="comp-row"><span class="comp cy">Electron ✓</span><span class="comp cy">Tauri ✓</span><span class="comp cy">Node.js ✓</span><span class="comp cn">Neutralinojs ✗</span></div>
+      <div class="c-foot"><span class="badge br">❌ Missing · GSoC Target</span><code style="font-size:0.59rem;color:var(--text3)">gethostname() / GetComputerName()</code></div>
+    </div>
+    <div class="card cr">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">🔐</div><div><div class="c-cat">Filesystem</div><div class="c-title">File Permissions</div></div></div></div>
+      <span class="api-line api-r">filesystem.getPermissions(path)</span>
+      <div class="mock-block"><div class="mock-lbl">What you'd see</div>owner: rwx · group: r-x · others: r--<br>octal: 0755</div>
+      <div class="why-block"><div class="why-lbl">Why this API?</div>Apps cannot read or set file permissions. Needed for CLI tools, security scanners, and deployment utilities.<div class="why-tags"><span class="wtag">security tools</span><span class="wtag">deploy scripts</span><span class="wtag">CLI apps</span></div></div>
+      <div class="comp-row"><span class="comp cy">Node.js fs.stat() ✓</span><span class="comp cy">Tauri ✓</span><span class="comp cn">Neutralinojs ✗</span></div>
+      <div class="c-foot"><span class="badge br">❌ Missing · GSoC Target</span><code style="font-size:0.59rem;color:var(--text3)">stat() / GetFileSecurity()</code></div>
+    </div>
+    <div class="card cr">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">📊</div><div><div class="c-cat">Window</div><div class="c-title">Taskbar Progress</div></div></div></div>
+      <span class="api-line api-r">window.setProgressBar(value)</span>
+      <div class="mock-block"><div class="mock-lbl">What you'd see</div>[████████░░] 80% shown in taskbar</div>
+      <div class="why-block"><div class="why-lbl">Why this API?</div>Download/install progress shown directly in the taskbar icon. Uses ITaskbarList3 on Windows and NSDockTile on macOS.<div class="why-tags"><span class="wtag">downloads</span><span class="wtag">installers</span><span class="wtag">progress UI</span></div></div>
+      <div class="comp-row"><span class="comp cy">Electron ✓</span><span class="comp cy">Tauri ✓</span><span class="comp cn">NW.js ✗</span><span class="comp cn">Neutralinojs ✗</span></div>
+      <div class="c-foot"><span class="badge br">❌ Missing · GSoC Target</span><code style="font-size:0.59rem;color:var(--text3)">ITaskbarList3 / NSDockTile</code></div>
+    </div>
+    <div class="card cr">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">🔋</div><div><div class="c-cat">Power</div><div class="c-title">Power Save Mode</div></div></div></div>
+      <span class="api-line api-r">os.setPowerSaveMode(false)</span>
+      <div class="mock-block"><div class="mock-lbl">What you'd see</div>Sleep prevented: true<br>Reason: "video playback"</div>
+      <div class="why-block"><div class="why-lbl">Why this API?</div>Prevent system sleep during video playback, downloads, or long background tasks. All via OS-native calls.<div class="why-tags"><span class="wtag">media apps</span><span class="wtag">downloaders</span><span class="wtag">background tasks</span></div></div>
+      <div class="comp-row"><span class="comp cy">Electron powerSaveBlocker ✓</span><span class="comp cy">Tauri ✓</span><span class="comp cn">Neutralinojs ✗</span></div>
+      <div class="c-foot"><span class="badge br">❌ Missing · GSoC Target</span><code style="font-size:0.59rem;color:var(--text3)">SetThreadExecutionState()</code></div>
+    </div>
+    <div class="card ca">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">⚡</div><div><div class="c-cat">Novel Idea · Nobody Has This</div><div class="c-title">Clipboard Watcher</div></div></div><span style="font-size:0.59rem;color:var(--amber);background:var(--amber-lo);border:1px solid var(--amber-mid);padding:3px 8px;border-radius:20px;font-weight:600">First-mover</span></div>
+      <span class="api-line api-a">os.watchClipboard() — event-driven</span>
+      <div class="novel-mock">events.on('clipboardChange', (e) => {<br>&nbsp;&nbsp;console.log(e.detail.text);<br>});<br>// Win: AddClipboardFormatListener()<br>// Linux: XFixesSelectSelectionInput()<br>// macOS: NSPasteboard.changeCount</div>
+      <div class="why-block"><div class="why-lbl">Why this API?</div>Every framework requires polling clipboard.readText() on a timer — wastes CPU, adds latency. Native OS events eliminate polling entirely. ~150 lines C++, zero new dependencies.<div class="why-tags"><span class="wtag">password managers</span><span class="wtag">clipboard history</span><span class="wtag">dev tools</span><span class="wtag">accessibility</span></div></div>
+      <div class="comp-row"><span class="comp cn">Electron: polls ✗</span><span class="comp cn">Tauri: polls ✗</span><span class="comp cn">Everyone polls ✗</span></div>
+      <div class="c-foot"><span class="badge ba">⚡ Novel · Zero-Poll Architecture</span></div>
+    </div>
+  </div>
+
+  <!-- ── BEYOND GSOC (NEW) ── -->
+  <div class="sec-head" style="color:var(--purple)">Beyond GSoC — Future Roadmap</div>
+  <div class="grid">
+    <div class="card cf">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">🔔</div><div><div class="c-cat">Future Goal</div><div class="c-title">Native Notifications</div></div></div></div>
+      <span class="api-line api-p">os.showNotification(title, body)</span>
+      <div class="future-block"><div class="future-lbl">What it would do</div>Win32: Shell_NotifyIcon / WinToast<br>macOS: NSUserNotificationCenter<br>Linux: libnotify / D-Bus</div>
+      <div class="why-block"><div class="why-lbl">Why this matters</div>Electron and Tauri both expose native notification APIs. Neutralinojs has no way to alert users outside the app window.<div class="why-tags"><span class="wtag">desktop UX</span><span class="wtag">background apps</span><span class="wtag">alerts</span></div></div>
+      <div class="c-foot"><span class="badge bp">🔮 Post-GSoC Roadmap</span></div>
+    </div>
+    <div class="card cf">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">📋</div><div><div class="c-cat">Future Goal</div><div class="c-title">Extended Clipboard API</div></div></div></div>
+      <span class="api-line api-p">clipboard.readFiles() · clipboard.readHTML()</span>
+      <div class="future-block"><div class="future-lbl">What it would do</div>Read file paths from clipboard drop<br>Read rich HTML clipboard content<br>Currently only clipboard.readText() exists</div>
+      <div class="why-block"><div class="why-lbl">Why this matters</div>Drag-and-drop workflows, rich text editors, and file managers need more than plain text clipboard access.<div class="why-tags"><span class="wtag">drag and drop</span><span class="wtag">rich text</span><span class="wtag">file managers</span></div></div>
+      <div class="c-foot"><span class="badge bp">🔮 Post-GSoC Roadmap</span></div>
+    </div>
+    <div class="card cf">
+      <div class="c-head"><div class="c-title-g"><div class="c-icon">🖱</div><div><div class="c-cat">Future Goal</div><div class="c-title">Global Hotkeys</div></div></div></div>
+      <span class="api-line api-p">os.registerHotkey("Ctrl+Shift+X", fn)</span>
+      <div class="future-block"><div class="future-lbl">What it would do</div>Win32: RegisterHotKey() API<br>macOS: CGEventTap / addGlobalMonitor<br>System-wide keyboard shortcuts</div>
+      <div class="why-block"><div class="why-lbl">Why this matters</div>Password managers, screenshot tools, and productivity apps all require global hotkeys. Electron has globalShortcut — Neutralinojs has nothing equivalent.<div class="why-tags"><span class="wtag">productivity apps</span><span class="wtag">shortcuts</span><span class="wtag">accessibility</span></div></div>
+      <div class="c-foot"><span class="badge bp">🔮 Post-GSoC Roadmap</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4: ARCHITECTURE -->
+<div class="panel" id="panel-arch">
+  <div class="pg-intro">
+    <h2>How Neutralinojs Works Internally</h2>
+    <p>Every API in this proposal follows the same pattern: a thin JavaScript wrapper sends a JSON call over WebSocket IPC to a C++ handler, which delegates directly to the OS. No intermediate libraries, no runtime overhead, ~1MB binary.</p>
+  </div>
+  <div class="arch-wrap">
+    <div class="arch-grid">
+      <div class="arch-diag">
+        <div class="arch-ttl">API Call Flow · os.getUserInfo() Example</div>
+        <div class="arch-layer"><div class="arch-box ab-js"><div class="arch-box-cat">JavaScript · neutralino.js</div><div class="arch-box-main">Neutralino.os.getUserInfo()</div><div class="arch-box-sub">Returns Promise&lt;UserInfo&gt;</div></div></div>
+        <div class="arch-arr"><div class="arch-arr-line"></div><div class="arch-arr-lbl">WebSocket IPC · JSON { method: "os.getUserInfo" }</div><div class="arch-arr-head">↓</div></div>
+        <div class="arch-layer"><div class="arch-box ab-cpp"><div class="arch-box-cat">C++ Core · server/router.cpp</div><div class="arch-box-main">Route dispatch → os namespace</div><div class="arch-box-sub">methodMap["os.getUserInfo"]</div></div></div>
+        <div class="arch-arr"><div class="arch-arr-line"></div><div class="arch-arr-lbl">Direct OS API call · api/os/os.cpp</div><div class="arch-arr-head">↓</div></div>
+        <div class="arch-os-row">
+          <div class="arch-box ab-os"><div class="arch-box-cat">Windows</div><div class="arch-box-main" style="font-size:0.8rem">GetUserName()</div><div class="arch-box-sub">Win32 API · winbase.h</div></div>
+          <div class="arch-box ab-os"><div class="arch-box-cat">Linux / macOS</div><div class="arch-box-main" style="font-size:0.8rem">getpwuid(getuid())</div><div class="arch-box-sub">POSIX stdlib · pwd.h</div></div>
+        </div>
+        <div class="arch-arr"><div class="arch-arr-head" style="transform:rotate(180deg)">↓</div><div class="arch-arr-lbl">JSON response · { username, homeDirectory, uid }</div><div class="arch-arr-line"></div></div>
+        <div class="arch-layer"><div class="arch-box ab-js"><div class="arch-box-cat">Promise resolved</div><div class="arch-box-main">{ username: "Home", uid: 1000 }</div><div class="arch-box-sub">Ready to use in JavaScript</div></div></div>
+        <div class="flow-steps" style="margin-top:22px">
+          <div class="flow-step"><div class="flow-num">1</div><div class="flow-content"><div class="flow-title">Add route in router.cpp</div><div class="flow-code">{"os.getUserInfo", &amp;os::controllers::getUserInfo}</div></div></div>
+          <div class="flow-step"><div class="flow-num">2</div><div class="flow-content"><div class="flow-title">Declare in os.h</div><div class="flow-code">namespace controllers { json getUserInfo(json input); }</div></div></div>
+          <div class="flow-step"><div class="flow-num">3</div><div class="flow-content"><div class="flow-title">Implement in os.cpp with platform guards</div><div class="flow-code">#ifdef _WIN32 · #elif __APPLE__ · #else (Linux)</div></div></div>
+          <div class="flow-step"><div class="flow-num">4</div><div class="flow-content"><div class="flow-title">Export in neutralino.js client library</div><div class="flow-code">os.getUserInfo = () => sendMessage("os.getUserInfo")</div></div></div>
+        </div>
+      </div>
+      <div class="arch-principles">
+        <div class="principles-title">Design Principles · All 6 Proposed APIs</div>
+        <div class="principle"><div class="principle-icon">📦</div><div><div class="principle-title">Zero New Dependencies</div><div class="principle-desc">Every proposed API uses only platform stdlib or Win32/POSIX headers already present in the build. No CMakeLists.txt changes. No third-party code. Bundle stays at ~1MB.</div><div class="principle-code">stdlib · Win32 · POSIX — already in build</div></div></div>
+        <div class="principle"><div class="principle-icon">🔧</div><div><div class="principle-title">Consistent Code Pattern</div><div class="principle-desc">Every API follows the same 4-step pattern proven by PR #1632. One router entry, one .h declaration, one .cpp implementation with platform guards, one JS export.</div><div class="principle-code">router → os.h → os.cpp → neutralino.js</div></div></div>
+        <div class="principle"><div class="principle-icon">🖥</div><div><div class="principle-title">Cross-Platform Guards</div><div class="principle-desc">All platform code uses #ifdef _WIN32 / #elif __APPLE__ / #else guards — the exact same pattern used in 12+ places in os.cpp already. No new patterns introduced.</div><div class="principle-code">#ifdef _WIN32 · #elif __APPLE__ · #else</div></div></div>
+        <div class="principle"><div class="principle-icon">🔑</div><div><div class="principle-title">OS Delegation Principle</div><div class="principle-desc">Neutralinojs stays lightweight by delegating to the OS instead of bundling implementations. gethostname() is one OS call — not a 50KB library. This is the framework's core philosophy.</div><div class="principle-code">gethostname() → 1 syscall · 0KB added</div></div></div>
+        <div class="principle"><div class="principle-icon">🧪</div><div><div class="principle-title">Test Coverage First</div><div class="principle-desc">Every new API gets spec tests in spec/os.spec.js or spec/computer.spec.js covering type checking, valid range validation, and edge cases. PR #1608 proved this works.</div><div class="principle-code">spec/os.spec.js · type + range + edge cases</div></div></div>
+        <div class="principle"><div class="principle-icon">⚡</div><div><div class="principle-title">Novel: Zero-Poll Clipboard Events</div><div class="principle-desc">os.watchClipboard() uses native OS event push mechanisms — no polling timer. First desktop framework to do this. Electron and Tauri both still require setInterval() workarounds.</div><div class="principle-code">AddClipboardFormatListener() · WM_CLIPBOARDUPDATE</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="foot-left">
+    <div class="foot-dot"></div>
+    <span>NeutralKit v2.0</span>
+    <span style="color:var(--border2)">·</span>
+    <!-- CHANGED: replaced "GSoC 2026 · Neutralinojs Project 3 · itssagarK" with GitHub link -->
+    <a class="foot-gh" href="https://github.com/itssagarK" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      github.com/itssagarK
+    </a>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <div class="foot-prs" id="footer-pr-list">
+      <a class="pr-tag" href="https://github.com/neutralinojs/neutralinojs/pull/1608" target="_blank">PR #1608</a>
+      <a class="pr-tag" href="https://github.com/neutralinojs/neutralinojs/pull/1615" target="_blank">PR #1615</a>
+      <a class="pr-tag" href="https://github.com/neutralinojs/neutralinojs/pull/1616" target="_blank">PR #1616</a>
+      <a class="pr-tag" href="https://github.com/neutralinojs/neutralinojs/pull/1629" target="_blank">PR #1629</a>
+      <a class="pr-tag" href="https://github.com/neutralinojs/neutralinojs/pull/1630" target="_blank">PR #1630</a>
+      <a class="pr-tag" href="https://github.com/neutralinojs/neutralinojs/pull/1632" target="_blank">PR #1632</a>
+    </div>
+    <!-- ADDED: + Add PR button -->
+    <button class="btn-add-pr" onclick="openModal()">+ Add PR</button>
+  </div>
+</footer>
+
+<!-- ADD PR MODAL -->
+<div class="overlay" id="modal-overlay" onclick="closeOutside(event)">
+  <div class="modal">
+    <h3>Add a Pull Request</h3>
+    <div class="modal-sub">Link a new PR — it will appear in the footer and in My Contributions.</div>
+    <div class="mf"><label>PR Number</label><input id="m-num" type="text" placeholder="e.g. 1645"></div>
+    <div class="mf"><label>PR Title</label><input id="m-title" type="text" placeholder="e.g. Fix memory leak in window.cpp"></div>
+    <div class="mf"><label>Category</label>
+      <select id="m-cat">
+        <option>New API</option><option>Bug Fix</option><option>CI Fix</option>
+        <option>Documentation</option><option>Security</option><option>Test Cases</option><option>Other</option>
+      </select>
+    </div>
+    <div class="mf"><label>Description</label><input id="m-desc" type="text" placeholder="e.g. Freed HICON handle after tray update"></div>
+    <div class="modal-btns">
+      <button class="mbtn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="mbtn-add" onclick="addPR()">Add PR</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/neutralino.js"></script>
+<script>
+let extraCount = 0;
+
+function switchTab(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  el.classList.add('active');
+  if (id === 'apis' || id === 'prs') loadAll();
+}
+
+function kv(k, v) {
+  return `<div class="kv"><span class="kk">${k}</span><span class="vv">${v}</span></div>`;
+}
+
+function openModal() {
+  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('m-num').focus();
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  ['m-num','m-title','m-desc'].forEach(id => document.getElementById(id).value = '');
+}
+function closeOutside(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+function addPR() {
+  const num   = document.getElementById('m-num').value.trim().replace('#','');
+  const title = document.getElementById('m-title').value.trim();
+  const cat   = document.getElementById('m-cat').value;
+  const desc  = document.getElementById('m-desc').value.trim();
+  if (!num || !title) return;
+
+  const url = `https://github.com/neutralinojs/neutralinojs/pull/${num}`;
+  extraCount++;
+
+  // Add PR tag to footer
+  const tag = document.createElement('a');
+  tag.className = 'pr-tag'; tag.href = url; tag.target = '_blank';
+  tag.textContent = `PR #${num}`;
+  document.getElementById('footer-pr-list').appendChild(tag);
+
+  // Add card to Contributions tab
+  const root = document.getElementById('extra-prs-root');
+  if (extraCount === 1) {
+    root.innerHTML = `<div class="sec-head" style="color:var(--blue)">Added PRs</div><div class="grid" id="extra-grid"></div>`;
+  }
+  const card = document.createElement('div');
+  card.className = 'card cb';
+  card.innerHTML = `
+    <div class="c-head">
+      <div class="c-title-g"><div class="c-icon">🔗</div><div><div class="c-cat">${cat}</div><div class="c-title">${title}</div></div></div>
+      <a class="pr-tag" href="${url}" target="_blank">PR #${num}</a>
+    </div>
+    <span class="api-line api-b">neutralinojs/neutralinojs #${num}</span>
+    <div class="c-body">${desc ? kv('Description', desc) : '<span style="color:var(--text3);font-size:0.68rem">No description added</span>'}</div>
+    <div class="c-foot"><span class="badge bb">🛠 ${cat}</span></div>`;
+  document.getElementById('extra-grid').appendChild(card);
+
+  // Update total count
+  const tot = 9 + extraCount;
+  document.getElementById('stat-total').textContent = tot;
+  document.getElementById('tc-prs').textContent = tot + ' PRs';
+
+  closeModal();
+}
+
+async function loadAll() {
+  try {
+    const c = await Neutralino.computer.getCPUInfo();
+    document.getElementById('cpu-info').innerHTML =
+      kv('Model', c.model || c.modelName || 'N/A') +
+      kv('Cores', c.logicalThreadCount || c.cores || 'N/A') +
+      kv('Arch',  c.architecture || 'x64');
+  } catch(e) { document.getElementById('cpu-info').innerHTML = `<span style="color:var(--red);font-size:0.67rem">${e.message}</span>`; }
+
+  try {
+    const m = await Neutralino.computer.getMemoryInfo();
+    const tot = m.physical.total / 1073741824, avail = m.physical.available / 1073741824;
+    const used = tot - avail, pct = (used / tot * 100).toFixed(0);
+    document.getElementById('mem-info').innerHTML = kv('Total', tot.toFixed(1)+' GB') + kv('Used', used.toFixed(1)+' GB') + kv('Free', avail.toFixed(1)+' GB');
+    document.getElementById('mem-l').textContent = used.toFixed(1)+' GB used';
+    document.getElementById('mem-r').textContent = pct+'%';
+    setTimeout(() => {
+      const bar = document.getElementById('mem-bar');
+      bar.style.width = pct+'%';
+      if (pct > 85) bar.className='prog-bar pr2'; else if (pct > 65) bar.className='prog-bar pa';
+    }, 500);
+  } catch(e) { document.getElementById('mem-info').innerHTML = `<span style="color:var(--red);font-size:0.67rem">${e.message}</span>`; }
+
+  try {
+    const displays = await Neutralino.computer.getDisplays();
+    let html = '';
+    for (const [i,d] of displays.entries()) html += kv('Display '+(i+1), d.resolution.width+'×'+d.resolution.height);
+    document.getElementById('display-info').innerHTML = html || kv('Status','No displays found');
+  } catch(e) { document.getElementById('display-info').innerHTML = `<span style="color:var(--red);font-size:0.67rem">${e.message}</span>`; }
+
+  try {
+    const u = await Neutralino.os.getEnv('USERNAME'), h = await Neutralino.os.getEnv('USERPROFILE');
+    document.getElementById('env-info').innerHTML = kv('USERNAME', u||'N/A') + kv('USERPROFILE', h ? h.substring(0,32)+'...' : 'N/A');
+  } catch(e) { document.getElementById('env-info').innerHTML = `<span style="color:var(--red);font-size:0.67rem">${e.message}</span>`; }
+
+  try {
+    const docs = await Neutralino.os.getPath('documents'), dl = await Neutralino.os.getPath('downloads');
+    document.getElementById('paths-info').innerHTML = kv('Documents', docs ? docs.substring(0,32)+'...' : 'N/A') + kv('Downloads', dl ? dl.substring(0,32)+'...' : 'N/A');
+  } catch(e) { document.getElementById('paths-info').innerHTML = `<span style="color:var(--red);font-size:0.67rem">${e.message}</span>`; }
+
+  try {
+    const u = await Neutralino.os.getUserInfo();
+    document.getElementById('user-info').innerHTML = kv('username', u.username) + kv('homeDir', u.homeDirectory ? u.homeDirectory.substring(0,28)+'...' : 'N/A') + kv('shell', u.shell||'N/A') + kv('uid', u.uid !== undefined ? u.uid : 'N/A (Windows)');
+  } catch(e) { document.getElementById('user-info').innerHTML = `<span style="color:var(--red);font-size:0.68rem">Needs fork binary — PR #1632 not in official release</span>`; }
+
+  try {
+    const d = await Neutralino.os.getPath('desktop');
+    document.getElementById('desktop-path').innerHTML = kv('desktop', d||'N/A');
+  } catch(e) { document.getElementById('desktop-path').innerHTML = `<span style="color:var(--red);font-size:0.68rem">Needs fork binary — PR #1616 not merged yet</span>`; }
+
+  try {
+    const types = ['config','data','cache','pictures','music','video','temp'];
+    let html = '';
+    for (const t of types) {
+      try { const v = await Neutralino.os.getPath(t); html += kv(t, v ? v.substring(0,24)+'...' : 'N/A'); }
+      catch { html += `<div class="kv"><span class="kk">${t}</span><span class="vv" style="color:var(--red)">N/A</span></div>`; }
+    }
+    document.getElementById('all-paths').innerHTML = html;
+  } catch(e) { document.getElementById('all-paths').innerHTML = `<span style="color:var(--red);font-size:0.67rem">Error</span>`; }
+
+  setTimeout(() => {
+    document.getElementById('bar-e').style.width  = '100%';
+    document.getElementById('bar-n').style.width  = '67%';
+    document.getElementById('bar-t').style.width  = '2%';
+    document.getElementById('bar-nl').style.width = '0.7%';
+  }, 600);
+}
+
+Neutralino.init();
+Neutralino.events.on('ready', loadAll);
+</script>
+</body>
+</html>

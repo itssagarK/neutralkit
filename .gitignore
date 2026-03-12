@@ -1,0 +1,10 @@
+cd C:\Users\Home\Desktop\GSoC\neutralkit
+echo neutralino-win_x64.exe > .gitignore
+echo neutralino-win_x64.pdb >> .gitignore
+echo WebView2Loader.dll >> .gitignore
+echo .storage >> .gitignore
+git init
+git add .
+git commit -m "feat: NeutralKit — GSoC 2026 demo dashboard"
+git remote add origin https://github.com/itssagarK/neutralkit.git
+git push -u origin main
