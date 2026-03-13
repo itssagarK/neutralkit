@@ -18,9 +18,10 @@
 ---
  
 ## Demo
- 
- 
-<!-- ![NeutralKit Demo](docs/demo.gif) -->
+
+<p align="center">
+<img src="docs/demo.gif" width="900">
+</p>
  
 
 ---
