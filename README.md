@@ -163,7 +163,7 @@ The dashboard opens immediately. The **Stable APIs** tab fetches live data from 
 
 ## 👤 Author
 
-**Sagar** — BTech CSE · GSoC 2026 Applicant · Neutralinojs Project 3
+**Sagar** 
 
 - GitHub: [@itssagarK](https://github.com/itssagarK)
 - GSoC Discussion: [gsoc2026 #29](https://github.com/neutralinojs/gsoc2026/discussions/29)
