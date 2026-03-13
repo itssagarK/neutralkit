@@ -26,18 +26,6 @@
 
 ---
 
-## 📸 Screenshots
-
-| Stable APIs — Live Data | My Contributions — 9 PRs |
-|:-:|:-:|
-| ![Stable APIs](docs/screenshots/stable-apis.png) | ![Contributions](docs/screenshots/contributions.png) |
-
-| GSoC Goals — 6 Missing APIs | Architecture — Call Flow |
-|:-:|:-:|
-| ![GSoC Goals](docs/screenshots/gsoc-goals.png) | ![Architecture](docs/screenshots/architecture.png) |
-
----
-
 ## 🧭 What Is NeutralKit?
 
 NeutralKit is a four-tab system dashboard that serves three purposes simultaneously:
@@ -118,6 +106,20 @@ server/router.cpp → os namespace     ← C++ Router
 
 Neutralinojs stays lightweight by delegating system operations directly to the OS instead of bundling Chromium or Node.js. Every proposed API follows this same 4-step pattern: router entry → `.h` declaration → `.cpp` with platform guards → JS export.
 ---
+
+
+## 📸 Screenshots
+
+| Stable APIs — Live Data | My Contributions — 9 PRs |
+|:-:|:-:|
+| ![Stable APIs](docs/screenshots/stable-apis.png) | ![Contributions](docs/screenshots/contributions.png) |
+
+| GSoC Goals — 6 Missing APIs | Architecture — Call Flow |
+|:-:|:-:|
+| ![GSoC Goals](docs/screenshots/gsoc-goals.png) | ![Architecture](docs/screenshots/architecture.png) |
+
+---
+
 
 ## 🚀 Getting Started
 
