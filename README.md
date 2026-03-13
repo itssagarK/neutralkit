@@ -121,13 +121,13 @@ Neutralinojs stays lightweight by delegating system operations directly to the O
 ## 🚀 Getting Started
 
 ### Prerequisites
-- [Neutralinojs CLI](https://neutralinojs.com/docs/getting-started/your-first-neutralinojs-app) — install with `npm i -g @neutralinojs/neu`
-
-### Run locally
-
+Install Neutralinojs CLI :
 ```bash
 npm install -g @neutralinojs/neu
 ```
+
+### Run locally
+
 
 ```bash
 # 1. Clone the repository
