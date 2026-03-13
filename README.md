@@ -6,7 +6,11 @@
 
 ### GSoC 2026 · Neutralinojs Native API Dashboard
 
-**A live system dashboard that visualizes existing Neutralinojs APIs, demonstrates 9 real contributions, and proposes 6 missing APIs — all built with zero Chromium, zero Node.js, ~1MB binary.**
+**A lightweight Neutralinojs dashboard that:**
+
+Visualizes real system data from existing APIs,
+Highlights contributions made to the framework,
+Demonstrates proposed APIs for GSoC 2026
 
 [![GSoC 2026](https://img.shields.io/badge/GSoC-2026-orange?style=flat-square&logo=google)](https://summerofcode.withgoogle.com/)
 [![Neutralinojs](https://img.shields.io/badge/Neutralinojs-6.5.0-yellow?style=flat-square)](https://neutralinojs.com)
@@ -30,9 +34,9 @@
 
 NeutralKit is a four-tab system dashboard that serves three purposes simultaneously:
 
-1. **Proof of framework understanding** — fetches real live data from `computer.getCPUInfo()`, `computer.getMemoryInfo()`, `computer.getDisplays()`, `os.getEnv()`, and `os.getPath()` and displays it in a clean dashboard UI
-2. **Contribution portfolio** — every one of my 9 PRs has a dedicated card with live API calls where applicable, showing what was built and why it mattered
-3. **GSoC proposal visualizer** — 6 APIs that are completely absent from Neutralinojs but present in every competitor are shown with mock data, use cases, OS-level implementation details, and a competitor matrix
+1. **Framework understanding** - Shows Existing Neutralinojs APIs with live system data and displays it in a clean dashboard UI
+2. **Contribution portfolio** —Real contributions made to the framework, showing what was built and why it mattered
+3. **Missing APIs that could be implemented during GSoC** — 6 APIs that are completely absent from Neutralinojs but present in every competitor are shown with mock data, use cases, OS-level implementation details, and a competitor matrix
 
 ---
 
@@ -85,7 +89,9 @@ Every API below uses only OS-native calls — zero new dependencies, bundle stay
 | `window.setProgressBar(value)` | `ITaskbarList3` / `NSDockTile` | Electron ✓ · Tauri ✓ · **NL ✗** |
 | `os.setPowerSaveMode(enabled)` | `SetThreadExecutionState()` / `IOPMAssertionCreateWithName()` | Electron ✓ · Tauri ✓ · **NL ✗** |
 
-Also includes a **novel idea**: `os.watchClipboard()` — the only event-driven clipboard watcher in any desktop framework. Electron polls. Tauri polls. Everyone polls. This would use `AddClipboardFormatListener()` on Windows, `XFixesSelectSelectionInput()` on Linux, and `NSPasteboard.changeCount` on macOS.
+Also includes a **novel idea**: `os.watchClipboard()` — the only event-driven clipboard watcher in any desktop framework. 
+Most desktop frameworks currently rely on polling.
+An event-driven implementation could provide a more efficient alternative.
 ---
 
 ### ⚙️ Tab 4 — Architecture
@@ -104,9 +110,9 @@ server/router.cpp → os namespace     ← C++ Router
 { username, homeDirectory, uid }     ← Back to JS
 ```
 
-Neutralinojs stays lightweight by delegating system operations directly to the OS instead of bundling Chromium or Node.js. Every proposed API follows this same 4-step pattern: router entry → `.h` declaration → `.cpp` with platform guards → JS export.
+Neutralinojs stays lightweight by delegating system operations directly to the OS instead of bundling Chromium or Node.js.pattern: router entry → `.h` declaration → `.cpp` with platform guards → JS export.
 ---
-
+---
 
 ## 📸 Screenshots
 
@@ -124,12 +130,12 @@ Neutralinojs stays lightweight by delegating system operations directly to the O
 ## 🚀 Getting Started
 
 ### Prerequisites
-Install Neutralinojs CLI :
+Install the Neutralinojs CLI :
 ```bash
 npm install -g @neutralinojs/neu
 ```
 
-### Run locally
+### Run the application
 
 
 ```bash
@@ -162,7 +168,17 @@ The dashboard opens immediately. The **Stable APIs** tab fetches live data from 
 | `os` | `getUserInfo()` | *(Fork)* New API from PR #1632 |
 
 ---
+## Why This Project
 
+NeutralKit was built to demonstrate how Neutralinojs APIs work in practice
+and to highlight areas where the framework could expand.
+
+The dashboard makes it easier to visualize:
+• existing system capabilities
+• real contributions to the codebase
+• potential API improvements
+
+---
 
 ## 👤 Author
 
