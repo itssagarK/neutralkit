@@ -297,7 +297,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 <div align="center">
 
-Built with ❤️ for Neutralinojs · GSoC 2026 · Project 3 — Extending the Existing Native API
+Built with ❤️ for Neutralinojs
 
 **[View PRs](https://github.com/neutralinojs/neutralinojs/pulls?q=is%3Apr+author%3AitssagarK) · [GSoC Discussion](https://github.com/neutralinojs/gsoc2026/discussions/29) · [Run the App](https://github.com/itssagarK/neutralkit)**
 
