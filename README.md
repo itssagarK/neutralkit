@@ -174,16 +174,15 @@ NeutralKit includes professional-grade data management to ensure you never accid
 - **Reset App Button** (⚠️) — Wipes all Local Storage and restores the app to its original GSoC proposal state with a single click
 
 ---
-
 ## 📸 Screenshots
 
-| Stable APIs — Live Data | My Contributions — 9 PRs |
+| Stable APIs — Live Data | My Contributions — Interactive |
 |:-:|:-:|
-| ![Stable APIs](docs/screenshots/apis.png) | ![Contributions](docs/screenshots/mycontributions.png) |
+| <img src="docs/screenshots/stable-apis.png" width="450"> | <img src="docs/screenshots/contributions.png" width="450"> |
 
-| GSoC Goals — 10 Missing APIs | Architecture — Call Flow |
+| Goals — 10 Missing APIs | Architecture — Call Flow |
 |:-:|:-:|
-| ![GSoC Goals](docs/screenshots/goals.png) | ![Architecture](docs/screenshots/architecture.png) |
+| <img src="docs/screenshots/gsoc-goals.png" width="450"> | <img src="docs/screenshots/architecture.png" width="450"> |
 
 ---
 
