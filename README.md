@@ -179,11 +179,11 @@ NeutralKit includes professional-grade data management to ensure you never accid
 
 | Stable APIs — Live Data | My Contributions — 9 PRs |
 |:-:|:-:|
-| ![Stable APIs](docs/screenshots/stable-apis.png) | ![Contributions](docs/screenshots/contributions.png) |
+| ![Stable APIs](docs/screenshots/apis.png) | ![Contributions](docs/screenshots/mycontributions.png) |
 
 | GSoC Goals — 10 Missing APIs | Architecture — Call Flow |
 |:-:|:-:|
-| ![GSoC Goals](docs/screenshots/gsoc-goals.png) | ![Architecture](docs/screenshots/architecture.png) |
+| ![GSoC Goals](docs/screenshots/goals.png) | ![Architecture](docs/screenshots/architecture.png) |
 
 ---
 
