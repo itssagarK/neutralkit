@@ -178,7 +178,7 @@ neu update
 # 3. Run the app
 neu run
 ```
-
+---
 
 ## 📋 Key Improvements & Features
 
