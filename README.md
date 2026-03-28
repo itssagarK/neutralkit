@@ -179,12 +179,6 @@ neu update
 neu run
 ```
 
-The dashboard opens immediately. The **Stable APIs** tab fetches live data from your machine on load.
-
-> **Note:** Cards in the **My Contributions** tab marked "Needs fork binary" require building from [my fork](https://github.com/itssagarK/neutralinojs) since PR #1632 and PR #1616 are not yet in the official release.
-
----
-
 
 ## 📋 Key Improvements & Features
 
