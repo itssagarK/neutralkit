@@ -214,18 +214,6 @@ The dashboard opens immediately. The **Stable APIs** tab fetches live data from 
 
 ---
 
-## 🛠 Neutralinojs APIs Used
-
-| Module | API | Purpose in NeutralKit |
-|--------|-----|----------------------|
-| `computer` | `getCPUInfo()` | Live CPU model and architecture |
-| `computer` | `getMemoryInfo()` | RAM usage with animated bar |
-| `computer` | `getDisplays()` | Screen resolution |
-| `os` | `getEnv()` | Environment variables |
-| `os` | `getPath()` | System directory paths |
-| `os` | `getUserInfo()` | *(Fork)* New API from PR #1632 |
-
----
 
 ## 📋 Key Improvements & Features
 
