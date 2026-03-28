@@ -4,135 +4,122 @@
 
 # NeutralKit
 
-### GSoC 2026 · Neutralinojs Native API Dashboard
+### Neutralinojs Native API Dashboard
 
-**A lightweight Neutralinojs dashboard that:**
+**A lightweight desktop dashboard built with Neutralinojs that:**
 
-Visualizes real system data from existing APIs,
-Highlights contributions made to the framework,
-Demonstrates proposed APIs for GSoC 2026
+ Visualizes real system data using native APIs, Tracks open-source contributions interactively,  Demonstrates how lightweight desktop apps can be built without Chromium  
 
-[![GSoC 2026](https://img.shields.io/badge/GSoC-2026-orange?style=flat-square&logo=google)](https://summerofcode.withgoogle.com/)
 [![Neutralinojs](https://img.shields.io/badge/Neutralinojs-6.5.0-yellow?style=flat-square)](https://neutralinojs.com)
-[![PRs](https://img.shields.io/badge/Contributions-9%20PRs-green?style=flat-square)](https://github.com/neutralinojs/neutralinojs/pulls?q=is%3Apr+author%3AitssagarK)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)](LICENSE)
 
 </div>
 
 ---
- 
+
 ## Demo
 
 <p align="center">
 <img src="docs/demo.gif" width="900">
 </p>
- 
+
+---
+
+## 🆕 Interactive Update
+
+NeutralKit is now a **fully interactive dashboard** with persistent state and real user control.
+
+### 🔹 Local State (Zero Backend)
+- Uses `localStorage` for persistence  
+- No backend or database required  
+
+**Result:**  
+All changes persist across sessions while keeping the app lightweight.
+
+---
+
+### 🔹 Full CRUD Support
+- Add / Edit / Delete PRs and Goals  
+- Editable stats  
+- Clear action buttons (no hidden icons)  
+
+**Result:**  
+The dashboard can be reused by any developer to track their work.
+
+---
+
+### 🔹 History & Recovery System
+- Deleted items move to **History**  
+- One-click restore  
+- Confirmation before delete/edit  
+
+**Result:**  
+Prevents accidental data loss and improves usability.
+
+---
+
+### 🔹 UI Improvements
+- Footer redesigned to match header  
+- Improved typography and readability  
+- Consistent layout and spacing  
+
+**Result:**  
+Cleaner and more professional user experience.
+
+---
+
+### 🔹 Utility Features
+- Live clock  
+- Auto-refresh system data  
+- JSON export  
+
+**Result:**  
+The dashboard becomes a functional tool, not just a visual demo.
 
 ---
 
 ## 🧭 What Is NeutralKit?
 
-NeutralKit is a four-tab interactive system dashboard that serves three purposes simultaneously:
+NeutralKit is a four-tab system dashboard that helps:
 
-1. **Framework understanding** — Shows Existing Neutralinojs APIs with live system data and displays it in a clean dashboard UI with real-time monitoring capabilities
-2. **Contribution portfolio** — Real contributions made to the framework, showing what was built and why it mattered. Every PR is now fully editable and manageable with a modern, professional interface
-3. **Missing APIs that could be implemented during GSoC** — 10 APIs that are completely absent from Neutralinojs but present in every competitor are shown with mock data, use cases, OS-level implementation details, and a competitor matrix
-
-NeutralKit is **fully interactive** — add, edit, delete, and restore contributions and goals with a single click. All changes are automatically saved to your browser using Local Storage.
+1. Understand Neutralinojs APIs using live system data  
+2. Track development and contributions  
+3. Visualize how native desktop features can be built efficiently  
 
 ---
 
-## 🖥 Four Tabs, Four Purposes
+## 🖥 Features Overview
 
-### 🟢 Tab 1 — Stable APIs (Live System Monitor)
+### 🟢 System Information (Live APIs)
 
-Real-time system data fetched from the running binary with interactive monitoring features.
-
-#### Live Data Display
-
-| API | What It Shows |
-|-----|--------------|
-| `computer.getCPUInfo()` | Model, logical thread count, architecture |
-| `computer.getMemoryInfo()` | Total / used / free RAM with animated progress bar |
-| `computer.getDisplays()` | Resolution of all connected displays |
-| `os.getEnv("USERNAME")` | Current user and home directory |
-| `os.getPath("documents")` | Documents and Downloads paths |
-
-#### Monitoring & Export Features
-
-- **Live Ticking Clock** — A real-time clock in the header that updates every second
-- **Auto-Refresh Toggle** (⟳) — Click to enable automatic data refresh every 3 seconds. The button turns green when active
-- **JSON Export** (📥) — Download all current system metrics as a `.json` file to your computer
-- **Bundle Size Comparison Chart** — Visual comparison showing Electron (150MB) vs NW.js (100MB) vs Tauri (3MB) vs Neutralinojs (~1MB)
+| API | Output |
+|-----|--------|
+| `computer.getCPUInfo()` | CPU details |
+| `computer.getMemoryInfo()` | RAM usage |
+| `computer.getDisplays()` | Screen resolution |
+| `os.getEnv()` | Environment info |
+| `os.getPath()` | System paths |
 
 ---
 
-### 🔵 Tab 2 — My 9 Contributions (Fully Interactive)
+### 🔵 Contribution Tracker
 
-```
-9 Total PRs  ·  2 New APIs  ·  3 Bug Fixes  ·  2 Test PRs  ·  1 Security Find  ·  3 Docs PRs
-```
-
-Every contribution is now fully editable, restorable, and manageable directly from the dashboard.
-
-#### Features
-
-- **Editable PR Count** — Click on any of the stat numbers at the top to edit them. Changes auto-save
-- **Edit Any PR** (✏️ Button) — Update PR number, title, category, and description for any contribution card
-- **Delete with Safety** (🗑️ Button) — Remove any PR. A confirmation warning prevents accidents
-- **Restore Deleted PRs** — Open the History vault (🕒) at the bottom to restore any deleted items
-- **Add New PRs** (➕ Manage PRs) — Click the footer button to open a form. Enter PR number, title, category, and description to instantly generate a new card
-- **Smart Categorization** — New PRs are automatically sorted into the correct grid based on category (New APIs, Bug Fixes, Test PRs, Docs, Other)
-
-#### Contributions Covered
-
-- New C++ API implementations
-- Memory leak and path bug fixes
-- CI timeout fixes for Windows
-- Missing test case coverage
-- Documentation accuracy fixes
-- Supply chain attack detection
- 
-Each PR has a dedicated card. Cards marked **"Needs fork binary"** call your actual implementation live.
+- Track PRs and work items  
+- Edit and update entries  
+- Mark progress visually  
 
 ---
 
-### 🔴 Tab 3 — GSoC Goals: 10 Missing APIs (Fully Interactive)
+### 🔴 Goals & Planning
 
-Every API below uses only OS-native calls — zero new dependencies, bundle stays at ~1MB.
-
-All Goal cards are fully editable with dynamic competitor analysis dropdown updates.
-
-#### Core APIs
-
-| API | OS Implementation | Competitor Support |
-|-----|------------------|--------------------|
-| `os.getNetworkInterfaces()` | `getifaddrs()` / `GetAdaptersAddresses()` | Electron ✓ · Tauri ✓ · Node.js ✓ · **NL ✗** |
-| `os.getHostname()` | `gethostname()` / `GetComputerName()` | Electron ✓ · Tauri ✓ · Node.js ✓ · **NL ✗** |
-| `filesystem.getPermissions(path)` | `stat()` / `GetFileSecurity()` | Node.js ✓ · Tauri ✓ · **NL ✗** |
-| `filesystem.setPermissions(path, mode)` | `chmod()` / `SetFileSecurity()` | Node.js ✓ · Tauri ✓ · **NL ✗** |
-| `window.setProgressBar(value)` | `ITaskbarList3` / `NSDockTile` | Electron ✓ · Tauri ✓ · **NL ✗** |
-| `os.setPowerSaveMode(enabled)` | `SetThreadExecutionState()` / `IOPMAssertionCreateWithName()` | Electron ✓ · Tauri ✓ · **NL ✗** |
-
-#### Extended APIs
-
-| API | OS Implementation | Purpose |
-|-----|------------------|---------| 
-| `os.getBatteryInfo()` | `GetSystemPowerStatus()` / Power Management APIs | Battery percentage, charging status, time remaining |
-| `filesystem.getDiskInfo()` | `GetDiskFreeSpaceEx()` / `statfs()` | Disk space usage, total capacity, available space |
-| `os.getInstalledApps()` | Registry queries / Package managers | List of installed applications with metadata |
-| `os.watchClipboard()` | Event-driven clipboard monitoring | **Novel idea**: The only event-driven clipboard watcher in any desktop framework (vs. polling) |
-
-#### Interactive Goal Management
-
-- **Edit Any Goal** (✏️ Button) — Update API name, description, OS implementation details
-- **Dynamic Competitor Dropdowns** — Edit menus automatically adjust competitor support (Electron/Tauri) for each API
-- **Delete & Restore** — Remove goals with confirmation, restore them from History anytime
-- **Add New Goals** (➕ Manage Goals) — Create custom GSoC goals with full competitor analysis support
+- Add and manage goals  
+- Edit / delete with confirmation  
+- Track completion status  
 
 ---
 
-### ⚙️ Tab 4 — Architecture (Call Flow Diagram)
+### ⚙️ Architecture View
+
 
 A detailed two-column diagram showing the complete API call flow and system integration.
 
@@ -157,38 +144,22 @@ Neutralinojs stays lightweight by delegating system operations directly to the O
 
 ---
 
-## 🛡️ Data Safety & Management Features
 
-NeutralKit includes professional-grade data management to ensure you never accidentally lose your work.
-
-### Local Storage System
-
-- **Automatic Persistence** — All edits, additions, and deletions are instantly saved to browser Local Storage
-- **Zero Backend Required** — Everything runs locally on your machine; your data never leaves your computer
-
-### Safety Features
-
-- **Confirmation Warnings** — Delete actions always ask for confirmation before removing items
-- **History Vault** (🕒) — Deleted PRs and Goals are moved to a hidden history modal instead of being permanently removed
-- **One-Click Restore** — Click "Restore" in the History modal to bring back any deleted item
-- **Reset App Button** (⚠️) — Wipes all Local Storage and restores the app to its original GSoC proposal state with a single click
-
----
 ## 📸 Screenshots
 
-| Stable APIs — Live Data | My Contributions — Interactive |
+| System Data | Contributions |
 |:-:|:-:|
-| <img src="docs/screenshots/stable-apis.png" width="450"> | <img src="docs/screenshots/contributions.png" width="450"> |
+| ![Stable APIs](docs/screenshots/stable-apis.png) | ![Contributions](docs/screenshots/contributions.png) |
 
-| Goals — 10 Missing APIs | Architecture — Call Flow |
+| Goals | Architecture |
 |:-:|:-:|
-| <img src="docs/screenshots/gsoc-goals.png" width="450"> | <img src="docs/screenshots/architecture.png" width="450"> |
+| ![GSoC Goals](docs/screenshots/gsoc-goals.png) | ![Architecture](docs/screenshots/architecture.png) |
+
 
 ---
 
 ## 🚀 Getting Started
 
-### Prerequisites
 Install the Neutralinojs CLI:
 ```bash
 npm install -g @neutralinojs/neu
@@ -246,7 +217,7 @@ The dashboard opens immediately. The **Stable APIs** tab fetches live data from 
 - Responsive button styling and feedback
 
 #### 5. Complete Content Synchronization
-- Expanded from 6 to 10 proposed GSoC APIs
+- Expanded API coverage with additional proposed native features
 - All 9 contributions accurately represented
 - Inline error handling (no ugly alert popups)
 - Dynamic competitor support dropdown menus
@@ -262,7 +233,7 @@ The dashboard makes it easier to visualize:
 - Real contributions to the codebase with full management features
 - Potential API improvements through an interactive, professional interface
 
-NeutralKit serves as both a **technical portfolio piece** and a **working tool** for managing your GSoC contributions and proposals.
+NeutralKit serves as both a **technical portfolio piece** and a **working tool** for managing your GSoC open-source contributions and tracking progress
 
 ---
 
