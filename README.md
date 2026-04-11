@@ -6,9 +6,7 @@
 
 ### Neutralinojs Native API Dashboard
 
-**A lightweight desktop dashboard built with Neutralinojs that:**
-
- Visualizes real system data using native APIs, Tracks open-source contributions interactively,  Demonstrates how lightweight desktop apps can be built without Chromium  
+A lightweight desktop dashboard built with **Neutralinojs** that visualizes real system data using native APIs, tracks open-source contributions interactively, and demonstrates how capable desktop apps can be without bundling Chromium or Node.js.
 
 [![Neutralinojs](https://img.shields.io/badge/Neutralinojs-6.5.0-yellow?style=flat-square)](https://neutralinojs.com)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)](LICENSE)
@@ -20,112 +18,76 @@
 ## Demo
 
 <p align="center">
-<img src="docs/demo.gif" width="900">
+  <img src="docs/demo.gif" width="900" alt="NeutralKit Demo" />
 </p>
 
 ---
 
-## 🆕 Interactive Update
+## What Is NeutralKit?
 
-NeutralKit is now a **fully interactive dashboard** with persistent state and real user control.
+NeutralKit is a four-tab system dashboard that helps you:
 
-### 🔹 Local State (Zero Backend)
-- Uses `localStorage` for persistence  
-- No backend or database required  
+1. **Understand Neutralinojs APIs** using live, real system data
+2. **Track development and contributions** with full CRUD support
+3. **Visualize native desktop architecture** — how lightweight apps can be built efficiently
 
-**Result:**  
-All changes persist across sessions while keeping the app lightweight.
-
----
-
-### 🔹 Full CRUD Support
-- Add / Edit / Delete PRs and Goals  
-- Editable stats  
-- Clear action buttons (no hidden icons)  
-
-**Result:**  
-The dashboard can be reused by any developer to track their work.
+It serves as both a **technical portfolio piece** and a **working tool** for managing open-source contributions and GSoC progress.
 
 ---
 
-### 🔹 History & Recovery System
-- Deleted items move to **History**  
-- One-click restore  
-- Confirmation before delete/edit  
+## Screenshots
 
-**Result:**  
-Prevents accidental data loss and improves usability.
+| System Data | Contributions |
+|:-----------:|:-------------:|
+| ![Stable APIs](docs/screenshots/stable-apis.png) | ![Contributions](docs/screenshots/contributions.png) |
 
----
-
-### 🔹 UI Improvements
-- Footer redesigned to match header  
-- Improved typography and readability  
-- Consistent layout and spacing  
-
-**Result:**  
-Cleaner and more professional user experience.
+| Goals | Architecture |
+|:-----:|:------------:|
+| ![GSoC Goals](docs/screenshots/gsoc-goals.png) | ![Architecture](docs/screenshots/architecture.png) |
 
 ---
 
-### 🔹 Utility Features
-- Live clock  
-- Auto-refresh system data  
-- JSON export  
+## Features
 
-**Result:**  
-The dashboard becomes a functional tool, not just a visual demo.
+###  System Information — Live Native APIs
 
----
-
-## 🧭 What Is NeutralKit?
-
-NeutralKit is a four-tab system dashboard that helps:
-
-1. Understand Neutralinojs APIs using live system data  
-2. Track development and contributions  
-3. Visualize how native desktop features can be built efficiently  
-
----
-
-## 🖥 Features Overview
-
-### 🟢 System Information (Live APIs)
+Reads real data directly from your OS using Neutralinojs APIs:
 
 | API | Output |
 |-----|--------|
-| `computer.getCPUInfo()` | CPU details |
-| `computer.getMemoryInfo()` | RAM usage |
-| `computer.getDisplays()` | Screen resolution |
-| `os.getEnv()` | Environment info |
-| `os.getPath()` | System paths |
+| `computer.getCPUInfo()` | CPU model and core details |
+| `computer.getMemoryInfo()` | RAM usage (total / available) |
+| `computer.getDisplays()` | Screen resolution and display info |
+| `os.getEnv()` | Environment variables |
+| `os.getPath()` | System-standard directory paths |
+
+Auto-refresh every 3 seconds keeps all metrics live. Data can be exported as JSON at any time.
 
 ---
 
-### 🔵 Contribution Tracker
+###  Contribution Tracker
 
-- Track PRs and work items  
-- Edit and update entries  
-- Mark progress visually  
-
----
-
-### 🔴 Goals & Planning
-
-- Add and manage goals  
-- Edit / delete with confirmation  
-- Track completion status  
+- Track PRs and work items with smart categorization
+- Add, edit, and delete entries with inline confirmation dialogs
+- Visual progress indicators per contribution
+- All 9 contributions accurately represented with full management controls
 
 ---
 
-### ⚙️ Architecture View
+###  Goals & Planning
 
+- Add and manage development goals
+- Edit or delete with confirmation to prevent accidents
+- Track completion status visually
+- Restore deleted goals from the History vault
+
+---
+
+###  Architecture View
 
 A detailed two-column diagram showing the complete API call flow and system integration.
 
-#### API Call Flow Example
-
-Using `os.getUserInfo()` as the example:
+**Example — `os.getUserInfo()` call flow:**
 
 ```
 Neutralino.os.getUserInfo()          ← JavaScript
@@ -138,34 +100,35 @@ server/router.cpp → os namespace     ← C++ Router
 { username, homeDirectory, uid }     ← Back to JS
 ```
 
-#### Architecture Pattern
+Neutralinojs stays lightweight by delegating system operations directly to the OS instead of bundling Chromium or Node.js. The pattern follows:
 
-Neutralinojs stays lightweight by delegating system operations directly to the OS instead of bundling Chromium or Node.js. The pattern follows: **router entry → `.h` declaration → `.cpp` with platform guards → JS export**.
-
----
-
-
-## 📸 Screenshots
-
-| System Data | Contributions |
-|:-:|:-:|
-| ![Stable APIs](docs/screenshots/stable-apis.png) | ![Contributions](docs/screenshots/contributions.png) |
-
-| Goals | Architecture |
-|:-:|:-:|
-| ![GSoC Goals](docs/screenshots/gsoc-goals.png) | ![Architecture](docs/screenshots/architecture.png) |
-
+> **router entry → `.h` declaration → `.cpp` with platform guards → JS export**
 
 ---
 
-## 🚀 Getting Started
+## Local State & Persistence
+
+NeutralKit is fully interactive with **zero backend required**:
+
+- **`localStorage`** handles all persistence — data survives app restarts
+- **Full CRUD** — create, read, update, and delete PRs, goals, and stats
+- **History & Recovery** — deleted items move to a History vault with one-click restore
+- **Confirmation dialogs** before any destructive action
+- **JSON export** of current system snapshot
+- **Live clock** in the header
+- **Reset to defaults** option available at any time
+
+---
+
+## Getting Started
 
 Install the Neutralinojs CLI:
+
 ```bash
 npm install -g @neutralinojs/neu
 ```
 
-### Run the Application
+Clone and run:
 
 ```bash
 # 1. Clone the repository
@@ -178,62 +141,18 @@ neu update
 # 3. Run the app
 neu run
 ```
----
-
-## 📋 Key Improvements & Features
-
-### Version 1.0 — Interactive Dashboard Edition
-
-#### 1. Zero-Backend Local Storage System
-- Editable statistics (PR counts, categories)
-- Full CRUD operations (Create, Read, Update, Delete) for PRs and Goals
-- Smart categorization system for new contributions
-- Automatic form-to-card generation
-
-#### 2. Data Safety & History Management
-- Soft deletion with History vault
-- One-click restoration of deleted items
-- Confirmation warnings on destructive actions
-- Reset app to original state option
-
-#### 3. Real-Time System Monitoring
-- Live updating clock in header
-- Auto-refresh toggle for system metrics (3-second intervals)
-- JSON export of current system data
-- Graceful error handling for API failures
-
-#### 4. Professional UI/UX Enhancements
-- Improved text contrast and readability
-- Bold, color-coded action buttons (Edit in blue, Delete in red)
-- Fixed header and footer with native app feel
-- Clean, professional modal dialogs
-- Disabled text selection on chrome elements
-- Responsive button styling and feedback
-
-#### 5. Complete Content Synchronization
-- Expanded API coverage with additional proposed native features
-- All 9 contributions accurately represented
-- Inline error handling (no ugly alert popups)
-- Dynamic competitor support dropdown menus
 
 ---
 
 ## Why This Project
 
-NeutralKit was built to demonstrate how Neutralinojs APIs work in practice and to highlight areas where the framework could expand.
-
-The dashboard makes it easier to visualize:
-- Existing system capabilities with live data
-- Real contributions to the codebase with full management features
-- Potential API improvements through an interactive, professional interface
-
-NeutralKit serves as both a **technical portfolio piece** and a **working tool** for managing your GSoC open-source contributions and tracking progress
+NeutralKit was built to demonstrate how Neutralinojs APIs work in practice and to highlight areas where the framework could expand. The dashboard makes it easy to visualize existing system capabilities with live data, real contributions to the codebase with full management features, and potential API improvements through an interactive, professional interface.
 
 ---
 
-## 👤 Author
+## Author
 
-**Sagar** 
+**Sagar**
 
 - GitHub: [@itssagarK](https://github.com/itssagarK)
 - GSoC Discussion: [gsoc2026 #29](https://github.com/neutralinojs/gsoc2026/discussions/29)
@@ -241,7 +160,7 @@ NeutralKit serves as both a **technical portfolio piece** and a **working tool**
 
 ---
 
-## 📄 License
+## License
 
 This project is open source and available under the [MIT License](LICENSE).
 
