@@ -35,17 +35,6 @@ It serves as both a **technical portfolio piece** and a **working tool** for man
 
 ---
 
-## Screenshots
-
-| System Data | Contributions |
-|:-----------:|:-------------:|
-| ![Stable APIs](docs/screenshots/apis.png) | ![Contributions](docs/screenshots/myontributions.png) |
-
-| Goals | Architecture |
-|:-----:|:------------:|
-| ![GSoC Goals](docs/screenshots/gsoc-goals.png) | ![Architecture](docs/screenshots/architecture.png) |
-
----
 
 ## Features
 
@@ -120,6 +109,17 @@ NeutralKit is fully interactive with **zero backend required**:
 
 ---
 
+## Screenshots
+
+| System Data | Contributions |
+|:-----------:|:-------------:|
+| ![Stable APIs](docs/screenshots/apis.png) | ![Contributions](docs/screenshots/myontributions.png) |
+
+| Goals | Architecture |
+|:-----:|:------------:|
+| ![GSoC Goals](docs/screenshots/gsoc-goals.png) | ![Architecture](docs/screenshots/architecture.png) |
+
+---
 ## Getting Started
 
 Install the Neutralinojs CLI:
