@@ -39,7 +39,7 @@ It serves as both a **technical portfolio piece** and a **working tool** for man
 
 | System Data | Contributions |
 |:-----------:|:-------------:|
-| ![Stable APIs](docs/screenshots/stable-apis.png) | ![Contributions](docs/screenshots/contributions.png) |
+| ![Stable APIs](docs/screenshots/apis.png) | ![Contributions](docs/screenshots/myontributions.png) |
 
 | Goals | Architecture |
 |:-----:|:------------:|
